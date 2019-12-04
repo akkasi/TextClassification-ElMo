@@ -11,7 +11,7 @@ from keras import backend as K
 from keras.preprocessing.text import text_to_word_sequence
 from keras.preprocessing.text import Tokenizer
 from keras.models import Model, Input
-from keras.layers import LSTM, Lambda,Dropout, Dense, Embedding, Flatten
+from keras.layers import LSTM, Lambda,Dropout, Dense, Embedding, Flatten, Conv1D
 from keras.layers.merge import add
 from keras.datasets import imdb
 from sklearn.model_selection import train_test_split
@@ -74,9 +74,19 @@ def ELMO_Classification(Train, Label):
     def build_model():
         Inputs = Input(shape=(max_len,), dtype=tf.string)
         embedding_layer = Lambda(ElmoEmbedding, output_shape=(max_len, 1024))(Inputs)
-        lstm1 = LSTM(128,return_sequences=True )(embedding_layer)
-        lstm1 = LSTM(128, return_sequences=False)(lstm1)
-        dense = Dense(128, activation='relu')(lstm1)
+        # If you want to use Convolutional networks leave 4 lines below uncommented
+
+        cnn = Conv1D(128,5,activation='relu')(embedding_layer)
+        cnn = Conv1D(128,5,activation='relu')(cnn)
+        cnn = Flatten()(cnn)
+        dense = Dense(128, activation='relu')(cnn)
+
+        # If you want to use LSTM make three above lines commented and do uncomment three lines below
+
+        # lstm = LSTM(128,return_sequences=True )(embedding_layer)
+        # lstm = LSTM(128, return_sequences=False)(lstm)
+        # dense = Dense(128, activation='relu')(lstm)
+
         dense = Dense(1, activation='sigmoid')(dense)
         
         model = Model(input=[Inputs], outputs=dense)
