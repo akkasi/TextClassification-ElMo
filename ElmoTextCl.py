@@ -32,7 +32,7 @@ df = pd.concat(df_list)
 
 max_len = 50
 batch_size = 32
-Epoach = 1
+Epoach = 10
 
 Train = df.sentence.values
 Label = df.label.values
@@ -44,7 +44,7 @@ def ELMO_Classification(Train, Label):
     sess.run(tf.global_variables_initializer())
     sess.run(tf.tables_initializer())
 
-    elmo_model = hub.Module("https://tfhub.dev/google/elmo/2", trainable=True)
+    elmo_model = hub.Module("https://tfhub.dev/google/elmo/2", trainable=False)
 
     def Balance_batch(Data, Label, batch_size=32):
         Data = np.array(Data)
@@ -92,7 +92,7 @@ def ELMO_Classification(Train, Label):
 
     print("Test Score:", score[0])
     print("Test Accuracy:", score[1])
-    sess.close()
+
 
 ELMO_Classification(Train,Label)
 
