@@ -5,5 +5,5 @@ To run this code, you must have the following modules (it would be better to run
 * Tensorflo-hub <br />
 * pandas <br />
 * Keras 2.2.* <br />
-* Sickit-learn <br />
+* Sickit-learn1 <br />
 * numpy <br />
