@@ -7,3 +7,4 @@ To run this code, you must have the following modules (it would be better to run
 * Keras 2.2.* <br />
 * Sickit-learn1 <br />
 * numpy <br />
+* practice 1
